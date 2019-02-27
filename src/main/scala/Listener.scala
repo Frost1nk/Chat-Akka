@@ -28,7 +28,7 @@ class Listener extends Actor with ActorLogging {
 
   var connect: String = _
 
-//  var refs = Set.empty[ActorRef]
+  var refs = Set.empty[ActorRef]
 
   override def preStart(): Unit = {
     cluster.subscribe(self, initialStateMode = InitialStateAsEvents,
@@ -37,20 +37,12 @@ class Listener extends Actor with ActorLogging {
 
   override def postStop(): Unit = cluster.unsubscribe(self)
 
-//  def CheckClusterSize(msg:String)={
-//    val clusterSize = cluster.state.members.count{
-//      m=>
-//        m.status == MemberStatus.Up || m.status == MemberStatus.Joining
-//    }
-//    refs += listener
-//  }
-
 
   def receive = {
 
     case MemberUp(member) =>
-//      refs += listener
-//      refs.foreach(e=>println(e))
+      refs += listener
+      refs.foreach(e=>println(e))
 
     case MemberJoined(member)=>
 
