@@ -42,9 +42,9 @@ class Listener extends Actor with ActorLogging {
 
     case MemberUp(member) =>
       refs += listener
-      refs.foreach(e=>println(e))
+      refs.foreach(e => println(e))
 
-    case MemberJoined(member)=>
+    case MemberJoined(member) =>
 
 
     case Join(seed) =>
@@ -58,7 +58,7 @@ class Listener extends Actor with ActorLogging {
 
 
     case Registration(name, ip, seed) =>
-//      storage += (name -> ip)
+      //      storage += (name -> ip)
       this.name = name
 
 
@@ -92,6 +92,9 @@ object Listener {
 
   case class Join(seed: String)
 
-  case class CheckClusterSize(msg:String)
+  case class CheckClusterSize(msg: String)
 
+  def addUser(refs: Set[ActorRef], act: ActorRef) = {
+    refs += act
+  }
 }
