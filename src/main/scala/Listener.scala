@@ -28,22 +28,32 @@ class Listener extends Actor with ActorLogging {
 
   var connect: String = _
 
-  var refs = Set.empty[ActorRef]
+//  var refs = Set.empty[ActorRef]
 
   override def preStart(): Unit = {
     cluster.subscribe(self, initialStateMode = InitialStateAsEvents,
       classOf[MemberEvent], classOf[UnreachableMember], classOf[MemberRemoved], classOf[MemberUp], classOf[MemberJoined])
-
-    context.system.eventStream.subscribe(self,classOf[Message])
   }
 
   override def postStop(): Unit = cluster.unsubscribe(self)
+
+//  def CheckClusterSize(msg:String)={
+//    val clusterSize = cluster.state.members.count{
+//      m=>
+//        m.status == MemberStatus.Up || m.status == MemberStatus.Joining
+//    }
+//    refs += listener
+//  }
 
 
   def receive = {
 
     case MemberUp(member) =>
-      refs += listener
+//      refs += listener
+//      refs.foreach(e=>println(e))
+
+    case MemberJoined(member)=>
+
 
     case Join(seed) =>
       connect = address + seed
@@ -54,8 +64,9 @@ class Listener extends Actor with ActorLogging {
       LoginController = controller
       listener = actor
 
+
     case Registration(name, ip, seed) =>
-      storage += (name -> ip)
+//      storage += (name -> ip)
       this.name = name
 
 
@@ -68,10 +79,11 @@ class Listener extends Actor with ActorLogging {
       subscriber ! getController(VPGcontrol, UserController)
       val publicActor = context.actorOf(Props[Publisher], name)
       VPGcontrol.publicActor = publicActor
-      refs.foreach(_ ! Message(name))
+
 
     case Message(text) =>
       VPGcontrol.post(text)
+      log.info("Исполнилось")
 
   }
 }
@@ -87,5 +99,7 @@ object Listener {
   case class Message(text: String)
 
   case class Join(seed: String)
+
+  case class CheckClusterSize(msg:String)
 
 }
