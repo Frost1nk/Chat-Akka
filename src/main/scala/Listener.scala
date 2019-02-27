@@ -9,7 +9,7 @@ import scala.collection.mutable
 
 class Listener extends Actor with ActorLogging {
 
-  val cluster = Cluster(context.system)
+  private val cluster = Cluster(context.system)
 
   //ссылка на созданый актор менеджер
   var listener: ActorRef = _
@@ -20,7 +20,7 @@ class Listener extends Actor with ActorLogging {
 
   var VPGcontrol: ViewPagerController = _
 
-  var storage = mutable.Map[String, String]().empty
+  private var storage = mutable.Map[String, String]().empty
 
   var name: String = _
 
@@ -94,7 +94,7 @@ object Listener {
 
   case class CheckClusterSize(msg: String)
 
-  def addUser(refs: Set[ActorRef], act: ActorRef) = {
-    refs += act
-  }
+//  def addUser(refs: Set[ActorRef], act: ActorRef) = {
+//    refs += act
+//  }
 }
