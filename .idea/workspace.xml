@@ -8,14 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$$anonfun$receive$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$$anonfun$receive$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$CheckClusterSize$.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$CheckClusterSize.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Join$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Join$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Join.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Join.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Message$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Message$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Registration$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Registration$.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Registration.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$Registration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Registration$.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$Registration.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$getUController$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$getUController$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$getUController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$getUController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener$login$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener$login$.class" afterDir="false" />
@@ -23,9 +21,12 @@
       <change beforePath="$PROJECT_DIR$/out/production/classes/Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Listener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/LoginController$.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/LoginController$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/application.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/Listener.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Listener.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/LoginController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/LoginController.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/Subscriber.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Subscriber.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/UserController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/UserController.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ViewPagerController.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ViewPagerController.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -66,11 +67,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/Listener.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="43" column="6" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="88" />
+            <state relative-caret-position="272">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/ViewPagerController.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/UserController.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="44" column="63" selection-start-line="44" selection-start-column="63" selection-end-line="44" selection-end-column="63" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/Subscriber.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -87,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/LoginController.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="40" column="74" lean-forward="true" selection-start-line="40" selection-start-column="74" selection-end-line="40" selection-end-column="74" />
+            <state relative-caret-position="467">
+              <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
               <folding>
                 <element signature="e#0#59#0" expanded="true" />
               </folding>
@@ -102,6 +136,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Scala Worksheet" />
       </list>
     </option>
   </component>
@@ -120,13 +155,14 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/resources/main.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/login.fxml" />
-        <option value="$PROJECT_DIR$/src/main/scala/ViewPagerController.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/UserUI.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Publisher.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/Subscriber.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/UserController.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/LoginController.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/ViewPagerController.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/Listener.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/Subscriber.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/text.sc" />
+        <option value="$PROJECT_DIR$/src/main/scala/UserController.scala" />
         <option value="$PROJECT_DIR$/src/main/resources/application.conf" />
       </list>
     </option>
@@ -183,7 +219,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551276194735" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551362538884" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -291,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551276169463</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="новое решение">
+      <created>1551344445001</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1551344445001</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -372,7 +415,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Перепсиал" />
     <MESSAGE value="Переписал" />
-    <option name="LAST_COMMIT_MESSAGE" value="Переписал" />
+    <MESSAGE value="новое решение" />
+    <option name="LAST_COMMIT_MESSAGE" value="новое решение" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.graphics/javafx/application/Application.java">
@@ -388,14 +432,6 @@
           <caret line="230" column="21" selection-start-line="230" selection-start-column="21" selection-end-line="230" selection-end-column="21" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/viewPager.fxml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.controls/javafx/scene/control/Dialog.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -531,23 +567,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ViewPagerController.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="32" column="27" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/Subscriber.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-cluster_2.12/2.5.20/143261ba529f5ebfcb4d8c1dd2425374fbcb629f/akka-cluster_2.12-2.5.20-sources.jar!/akka/cluster/Cluster.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1989">
@@ -638,29 +657,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/UserController.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="57" column="6" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/LoginController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="40" column="74" lean-forward="true" selection-start-line="40" selection-start-column="74" selection-end-line="40" selection-end-column="74" />
+        <state relative-caret-position="467">
+          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
           <folding>
             <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/ViewPagerController.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/viewPager.fxml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/Listener.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="43" column="6" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="88" />
+        <state relative-caret-position="272">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/text.sc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/Subscriber.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/UserController.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="44" column="63" selection-start-line="44" selection-start-column="63" selection-end-line="44" selection-end-column="63" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

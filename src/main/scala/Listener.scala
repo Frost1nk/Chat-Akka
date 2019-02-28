@@ -20,15 +20,13 @@ class Listener(name: String) extends Actor with ActorLogging {
 
   var VPGcontrol: ViewPagerController = _
 
-  private var storage = mutable.Map[String, String]().empty
-  ////
-  //  var name: String = _
+  var User_name: String = _
 
   var address = "akka.tcp://chat@"
 
   var connect: String = _
 
-  var refs = Set.empty[ActorRef]
+  var refs = Set.empty[ActorSelection]
 
   override def preStart(): Unit = {
     cluster.subscribe(self, initialStateMode = InitialStateAsEvents,
@@ -42,14 +40,17 @@ class Listener(name: String) extends Actor with ActorLogging {
 
     case MemberUp(member) =>
       val ref = context.actorSelection(RootActorPath(member.address) + s"/user/Manager")
-      ref ! Message(name, s"HEllo $ref")
+      log.info(s"Reference: $ref")
+      refs += ref
 
-    case MemberJoined(member) =>
+    case UnreachableMember(member)=>
 
 
-    case Join(seed) =>
+
+    case Join(seed,name,ip) =>
       connect = address + seed
       cluster.join(AddressFromURIString(connect))
+      User_name = name
 
 
     case login(controller, actor) =>
@@ -57,27 +58,24 @@ class Listener(name: String) extends Actor with ActorLogging {
       listener = actor
 
 
-    //    case Registration(name, ip, seed) =>
-    //      //      storage += (name -> ip)
-    //      this.name = name
-
-
     case getUController(controller) =>
       UserController = controller
       UserController.actor = listener
-      UserController.addUser(name)
+      UserController.addUser(User_name)
       VPGcontrol = UserController.control
       val subscriber = context.actorOf(Props[Subscriber])
       subscriber ! getController(VPGcontrol, UserController)
-      val publicActor = context.actorOf(Props[Publisher], name)
+      val publicActor = context.actorOf(Props[Publisher], User_name)
       VPGcontrol.publicActor = publicActor
 
 
     case Message(name: String, text: String) =>
-      //      VPGcontrol.post(text)
-      if (name != this.name)
-        log.info(s"Message from $name ===== $text")
+      if(VPGcontrol == null){Thread.sleep(3000)}else{VPGcontrol.post(name,text)
+        if (name != this.name)
+          log.info(s"Message from $name ===== $text")}
 
+    case AddUser(name:String)=>
+      if(VPGcontrol == null){Thread.sleep(2000)}else {UserController.addUser(name)}
   }
 }
 
@@ -85,13 +83,12 @@ object Listener {
 
   case class login(controller: LoginController, actor: ActorRef)
 
-  case class Registration(name: String, ip: String, seed: String)
-
   case class getUController(controller: UserController)
 
   case class Message(name: String, text: String)
 
-  case class Join(seed: String)
+  case class Join(seed: String,name:String,ip:String)
 
+  case class AddUser(name:String)
 
 }

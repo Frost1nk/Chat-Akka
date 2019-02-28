@@ -11,8 +11,6 @@ class Subscriber extends Actor with ActorLogging {
   // subscribe to the topic named "content"
   mediator ! Subscribe("content", self)
 
-  var subscribers = Map.empty[String, Set[ActorRef]].withDefaultValue(Set.empty)
-
   var controller: ViewPagerController = _
 
   var UIController: UserController = _
@@ -20,12 +18,11 @@ class Subscriber extends Actor with ActorLogging {
   def receive = {
     case s: String ⇒
       log.info("Got {}", s)
-      controller.post(s)
+      controller.post(sender().path.name,s)
 
     case SubscribeAck(Subscribe("content", None, `self`)) ⇒
-      //      subscribers += "content" -> (subscribers("content") + self)
       log.info("subscribing {}", self)
-    //      subscribers.foreach(e => println(e))
+
 
     case getController(controller, controllerUc) =>
       this.controller = controller

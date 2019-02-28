@@ -39,9 +39,8 @@ class LoginController {
     } else {
       val system = ActorSystem("chat")
       val listener = system.actorOf(Props(classOf[Listener], name),"Manager")
-      listener ! Join(seed)
+      listener ! Join(seed,name,ip)
       listener ! login(controller, listener)
-      listener ! Registration(name, seed, ip)
       LoginController.chat(stage, listener)
     }
   }

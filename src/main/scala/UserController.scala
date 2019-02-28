@@ -1,3 +1,5 @@
+import java.time.LocalDate
+
 import akka.actor.ActorRef
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
@@ -6,6 +8,8 @@ import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.{Alert, ListView, Tab, TabPane}
 import javafx.scene.layout.VBox
+
+import scala.collection.JavaConverters._
 
 class UserController {
   var actor: ActorRef = _
@@ -35,10 +39,16 @@ class UserController {
     val change: javafx.beans.value.ChangeListener[String] = (observable: ObservableValue[_ <: String], oldValue: String, newValue: String) => {
       addTabs(newValue)
     }
+
     listUsers.setOnMouseClicked(event => {
-      if (list.isEmpty) {} else {
-        addTabs(listUsers.getSelectionModel.getSelectedItem)
+      val selectedItem = listUsers.getSelectionModel.getSelectedItem
+      if (selectedItem == null || selectedItem ==  selectedItem) {
+        event.consume()
+      } else {
+        tabPane.getTabs.asScala.find(_.getText == selectedItem)
+          .fold(addTabs(selectedItem))(tabPane.getSelectionModel.select)
       }
+
     })
   }
 
