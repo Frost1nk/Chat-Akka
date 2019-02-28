@@ -1,5 +1,5 @@
 import Listener._
-import akka.actor.{Actor, ActorLogging, ActorRef, Address, AddressFromURIString, Props}
+import akka.actor.{Actor, ActorLogging, ActorRef, ActorSelection, Address, AddressFromURIString, Props, RootActorPath}
 import akka.cluster.Cluster
 import akka.cluster.ClusterEvent._
 import Subscriber.getController
@@ -7,7 +7,7 @@ import Subscriber.getController
 import scala.collection.mutable
 
 
-class Listener extends Actor with ActorLogging {
+class Listener(name: String) extends Actor with ActorLogging {
 
   private val cluster = Cluster(context.system)
 
@@ -21,8 +21,8 @@ class Listener extends Actor with ActorLogging {
   var VPGcontrol: ViewPagerController = _
 
   private var storage = mutable.Map[String, String]().empty
-
-  var name: String = _
+  ////
+  //  var name: String = _
 
   var address = "akka.tcp://chat@"
 
@@ -41,8 +41,8 @@ class Listener extends Actor with ActorLogging {
   def receive = {
 
     case MemberUp(member) =>
-      refs += listener
-      refs.foreach(e => println(e))
+      val ref = context.actorSelection(RootActorPath(member.address) + s"/user/Manager")
+      ref ! Message(name, s"HEllo $ref")
 
     case MemberJoined(member) =>
 
@@ -57,9 +57,9 @@ class Listener extends Actor with ActorLogging {
       listener = actor
 
 
-    case Registration(name, ip, seed) =>
-      //      storage += (name -> ip)
-      this.name = name
+    //    case Registration(name, ip, seed) =>
+    //      //      storage += (name -> ip)
+    //      this.name = name
 
 
     case getUController(controller) =>
@@ -73,9 +73,10 @@ class Listener extends Actor with ActorLogging {
       VPGcontrol.publicActor = publicActor
 
 
-    case Message(text) =>
-      VPGcontrol.post(text)
-      log.info("Исполнилось")
+    case Message(name: String, text: String) =>
+      //      VPGcontrol.post(text)
+      if (name != this.name)
+        log.info(s"Message from $name ===== $text")
 
   }
 }
@@ -88,13 +89,9 @@ object Listener {
 
   case class getUController(controller: UserController)
 
-  case class Message(text: String)
+  case class Message(name: String, text: String)
 
   case class Join(seed: String)
 
-  case class CheckClusterSize(msg: String)
 
-//  def addUser(refs: Set[ActorRef], act: ActorRef) = {
-//    refs += act
-//  }
 }

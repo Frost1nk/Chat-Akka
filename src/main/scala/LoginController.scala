@@ -38,8 +38,7 @@ class LoginController {
       alert.showAndWait()
     } else {
       val system = ActorSystem("chat")
-      val listener = system.actorOf(Props[Listener],name)
-      Listener.
+      val listener = system.actorOf(Props(classOf[Listener], name),"Manager")
       listener ! Join(seed)
       listener ! login(controller, listener)
       listener ! Registration(name, seed, ip)
