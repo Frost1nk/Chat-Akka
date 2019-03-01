@@ -1,3 +1,4 @@
+import Destination.get_Controllers
 import Listener._
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSelection, Address, AddressFromURIString, Props, RootActorPath}
 import akka.cluster.Cluster
@@ -11,8 +12,8 @@ class Listener(name: String) extends Actor with ActorLogging {
 
   private val cluster = Cluster(context.system)
 
-  //ссылка на созданый актор менеджер
-  var listener: ActorRef = _
+  //ссылка на созданый актор менеджер,приват
+  var listener,private_Actor,destination_Actor: ActorRef = _
 
   var LoginController: LoginController = _
 
@@ -47,7 +48,7 @@ class Listener(name: String) extends Actor with ActorLogging {
       log.info("Member is unreachable: ", member)
 
     case MemberRemoved(member, previousStatus) =>
-//      refs.foreach(e => if(e.anchorPath == member.address){refs.})
+    //      refs.foreach(e => if(e.anchorPath == member.address){refs.})
 
     case Join(seed, name, ip) =>
       connect = address + seed
@@ -64,25 +65,28 @@ class Listener(name: String) extends Actor with ActorLogging {
       UserController = controller
       UserController.actor = listener
       VPGcontrol = UserController.control
+      VPGcontrol.userController = UserController
       val subscriber = context.actorOf(Props[Subscriber])
       subscriber ! getController(VPGcontrol, UserController)
       val publicActor = context.actorOf(Props[Publisher], User_name)
+      val destination = context.actorOf(Props[Destination],User_name.toUpperCase)
+      destination_Actor = destination
+      UserController.private_actor = destination
+      val privateActor = context.actorOf(Props[Sender],User_name.toLowerCase)
+      println(privateActor.path)
+      private_Actor = privateActor
       VPGcontrol.publicActor = publicActor
 
+    case get_controller_Tab(viewPagerController)=>
+      destination_Actor ! get_Controllers(viewPagerController)
+      viewPagerController.check_Status = true
+      viewPagerController.privateActor = private_Actor
 
-    case Message(name: String, text: String) =>
-      if (VPGcontrol == null) {
-        Thread.sleep(3000)
-      } else {
-        VPGcontrol.post(name, text)
-        if (name != this.name)
-          log.info(s"Message from $name ===== $text")
-      }
 
     case AddUser(name: String) =>
       if (VPGcontrol == null || User_name == name) {
         Thread.sleep(2000)
-      }else{
+      } else {
         UserController.addUser(name)
       }
   }
@@ -94,10 +98,10 @@ object Listener {
 
   case class getUController(controller: UserController)
 
-  case class Message(name: String, text: String)
-
   case class Join(seed: String, name: String, ip: String)
 
   case class AddUser(name: String)
+
+  case class get_controller_Tab(viewPagerController: ViewPagerController)
 
 }

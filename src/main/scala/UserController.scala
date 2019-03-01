@@ -1,5 +1,7 @@
 import java.time.LocalDate
 
+import Destination.get_Controllers
+import Listener.get_controller_Tab
 import akka.actor.ActorRef
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
@@ -14,10 +16,14 @@ import scala.collection.JavaConverters._
 class UserController {
   var actor: ActorRef = _
 
+  var private_actor:ActorRef = _
+
   @FXML
   var tabPane: TabPane = _
 
   var control: ViewPagerController = _
+
+  var tab_control:ViewPagerController = _
 
   @FXML
   var listUsers: ListView[String] = _
@@ -59,15 +65,19 @@ class UserController {
     var root: VBox = loader.load()
     var tab: Tab = new Tab()
     var controller: ViewPagerController = loader.getController[ViewPagerController]
+    actor ! get_controller_Tab(controller)
+    controller.path = name.toUpperCase
     tab.setText(name)
     tab.setClosable(true)
     tab.setContent(root)
     tabPane.getTabs.add(tab)
   }
 
+
   def addUser(name: String): Unit = {
     Platform.runLater(() => {
       list.add(name)
     })
   }
+
 }
