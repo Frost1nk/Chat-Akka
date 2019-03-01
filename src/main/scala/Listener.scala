@@ -45,12 +45,17 @@ class Listener(name: String) extends Actor with ActorLogging {
       ref ! AddUser(name)
 
     case UnreachableMember(member) =>
-      log.info("Member is unreachable: ", member)
-      val ref = context.actorSelection(RootActorPath(member.address)+s"/user/Manager")
-      ref ! Delete_User(name)
+      log.info("Member is unreachable: {}", member)
+      val ref = context.actorSelection(RootActorPath(cluster.selfAddress)+s"/user/Manager")
+      ref ! Delete_User(User_name)
+
+    case MemberDowned(member)=>
+      val ref = context.actorSelection(RootActorPath(cluster.selfAddress)+s"/user/Manager")
+      ref ! Delete_User(User_name)
 
     case MemberRemoved(member, previousStatus) =>
-    //      refs.foreach(e => if(e.anchorPath == member.address){refs.})
+//      val ref = context.actorSelection(RootActorPath(member.address)+s"/user/Manager")
+//      ref ! Delete_User(User_name)
 
     case Join(seed, name, ip) =>
       connect = address + seed
@@ -91,6 +96,9 @@ class Listener(name: String) extends Actor with ActorLogging {
       } else {
         UserController.addUser(name)
       }
+
+    case Delete_User(name)=>
+      UserController.deleteUser(name)
   }
 }
 

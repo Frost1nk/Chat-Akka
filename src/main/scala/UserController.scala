@@ -74,9 +74,13 @@ class UserController {
   }
 
   def deleteUser(name: String): Unit = {
-    Platform.runLater(() =>{
+    Platform.runLater(() => {
+      list.forEach(e => if (e.compareTo(name) == name) {
+        println(e)
+      })
 
-  })
+    })
+    println("ТИПА УДАЛИЛ")
   }
 
   def addUser(name: String): Unit = {

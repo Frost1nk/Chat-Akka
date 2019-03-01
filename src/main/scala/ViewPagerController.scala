@@ -48,7 +48,6 @@ class ViewPagerController {
 
   def post(name: String, text: String): Unit = {
     Platform.runLater(() => {
-
       list.add(name + ":" + text)
     })
   }
