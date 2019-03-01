@@ -41,13 +41,15 @@ class Listener(name: String) extends Actor with ActorLogging {
     case MemberUp(member) =>
       val ref = context.actorSelection(RootActorPath(member.address) + s"/user/Manager")
       log.info(s"Reference: $ref")
-      refs += ref
+      ref ! AddUser(name)
 
-    case UnreachableMember(member)=>
+    case UnreachableMember(member) =>
+      log.info("Member is unreachable: ", member)
 
+    case MemberRemoved(member, previousStatus) =>
+//      refs.foreach(e => if(e.anchorPath == member.address){refs.})
 
-
-    case Join(seed,name,ip) =>
+    case Join(seed, name, ip) =>
       connect = address + seed
       cluster.join(AddressFromURIString(connect))
       User_name = name
@@ -61,7 +63,6 @@ class Listener(name: String) extends Actor with ActorLogging {
     case getUController(controller) =>
       UserController = controller
       UserController.actor = listener
-      UserController.addUser(User_name)
       VPGcontrol = UserController.control
       val subscriber = context.actorOf(Props[Subscriber])
       subscriber ! getController(VPGcontrol, UserController)
@@ -70,12 +71,20 @@ class Listener(name: String) extends Actor with ActorLogging {
 
 
     case Message(name: String, text: String) =>
-      if(VPGcontrol == null){Thread.sleep(3000)}else{VPGcontrol.post(name,text)
+      if (VPGcontrol == null) {
+        Thread.sleep(3000)
+      } else {
+        VPGcontrol.post(name, text)
         if (name != this.name)
-          log.info(s"Message from $name ===== $text")}
+          log.info(s"Message from $name ===== $text")
+      }
 
-    case AddUser(name:String)=>
-      if(VPGcontrol == null){Thread.sleep(2000)}else {UserController.addUser(name)}
+    case AddUser(name: String) =>
+      if (VPGcontrol == null || User_name == name) {
+        Thread.sleep(2000)
+      }else{
+        UserController.addUser(name)
+      }
   }
 }
 
@@ -87,8 +96,8 @@ object Listener {
 
   case class Message(name: String, text: String)
 
-  case class Join(seed: String,name:String,ip:String)
+  case class Join(seed: String, name: String, ip: String)
 
-  case class AddUser(name:String)
+  case class AddUser(name: String)
 
 }

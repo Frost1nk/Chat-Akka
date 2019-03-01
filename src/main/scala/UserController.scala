@@ -42,7 +42,7 @@ class UserController {
 
     listUsers.setOnMouseClicked(event => {
       val selectedItem = listUsers.getSelectionModel.getSelectedItem
-      if (selectedItem == null || selectedItem ==  selectedItem) {
+      if (selectedItem == null) {
         event.consume()
       } else {
         tabPane.getTabs.asScala.find(_.getText == selectedItem)
