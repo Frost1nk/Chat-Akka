@@ -46,6 +46,8 @@ class Listener(name: String) extends Actor with ActorLogging {
 
     case UnreachableMember(member) =>
       log.info("Member is unreachable: ", member)
+      val ref = context.actorSelection(RootActorPath(member.address)+s"/user/Manager")
+      ref ! Delete_User(name)
 
     case MemberRemoved(member, previousStatus) =>
     //      refs.foreach(e => if(e.anchorPath == member.address){refs.})
@@ -103,5 +105,7 @@ object Listener {
   case class AddUser(name: String)
 
   case class get_controller_Tab(viewPagerController: ViewPagerController)
+
+  case class Delete_User(name:String)
 
 }

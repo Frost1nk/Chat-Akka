@@ -16,14 +16,14 @@ import scala.collection.JavaConverters._
 class UserController {
   var actor: ActorRef = _
 
-  var private_actor:ActorRef = _
+  var private_actor: ActorRef = _
 
   @FXML
   var tabPane: TabPane = _
 
   var control: ViewPagerController = _
 
-  var tab_control:ViewPagerController = _
+  var tab_control: ViewPagerController = _
 
   @FXML
   var listUsers: ListView[String] = _
@@ -73,6 +73,11 @@ class UserController {
     tabPane.getTabs.add(tab)
   }
 
+  def deleteUser(name: String): Unit = {
+    Platform.runLater(() =>{
+
+  })
+  }
 
   def addUser(name: String): Unit = {
     Platform.runLater(() => {

@@ -1,6 +1,6 @@
-import Listener.{Join, Registration, getUController, login}
+import Listener.{Join, getUController, login}
 import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.cluster.ClusterEvent.MemberUp
+import com.typesafe.config.{Config, ConfigFactory}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.{Parent, Scene}
 import javafx.scene.control.Alert.AlertType

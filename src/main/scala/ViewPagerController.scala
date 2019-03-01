@@ -40,15 +40,15 @@ class ViewPagerController {
       publicActor ! Message(text)
     } else if (text.nonEmpty && check_Status == true) {
       privateActor ! Private_Message(path,text)
-        println(privateActor,path,text)
+      list.add(privateActor.path.name+" : "+text)
     }
     textArea.clear()
   }
 
 
   def post(name: String, text: String): Unit = {
-    if(userController.tabPane.getTabs.asScala.find(_.getText == name) == name){}
     Platform.runLater(() => {
+
       list.add(name + ":" + text)
     })
   }
