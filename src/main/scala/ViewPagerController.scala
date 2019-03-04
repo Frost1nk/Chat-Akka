@@ -6,7 +6,7 @@ import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.FXML
 import javafx.scene.control.{Button, ListView, SelectionMode, TextArea}
 import javafx.scene.input.{MouseEvent}
-import scala.collection.JavaConverters._
+
 
 class ViewPagerController {
   var publicActor: ActorRef = _
@@ -14,7 +14,7 @@ class ViewPagerController {
 
   var userController:UserController = _
 
-  var path:String = _
+  var path,name:String = _
 
   var check_Status: Boolean = false
 
@@ -40,7 +40,7 @@ class ViewPagerController {
       publicActor ! Message(text)
     } else if (text.nonEmpty && check_Status == true) {
       privateActor ! Private_Message(path,text)
-      list.add(privateActor.path.name+" : "+text)
+      list.add(name+" : "+text)
     }
     textArea.clear()
   }

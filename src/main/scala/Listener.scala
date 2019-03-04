@@ -1,4 +1,4 @@
-import Destination.get_Controllers
+import Destination.{get_Controllers, get_Ucontrol}
 import Listener._
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSelection, Address, AddressFromURIString, Props, RootActorPath}
 import akka.cluster.Cluster
@@ -27,7 +27,6 @@ class Listener(name: String) extends Actor with ActorLogging {
 
   var connect: String = _
 
-  var refs = Set.empty[ActorSelection]
 
   override def preStart(): Unit = {
     cluster.subscribe(self, initialStateMode = InitialStateAsEvents,
@@ -43,19 +42,6 @@ class Listener(name: String) extends Actor with ActorLogging {
       val ref = context.actorSelection(RootActorPath(member.address) + s"/user/Manager")
       log.info(s"Reference: $ref")
       ref ! AddUser(name)
-
-    case UnreachableMember(member) =>
-      log.info("Member is unreachable: {}", member)
-      val ref = context.actorSelection(RootActorPath(cluster.selfAddress)+s"/user/Manager")
-      ref ! Delete_User(User_name)
-
-    case MemberDowned(member)=>
-      val ref = context.actorSelection(RootActorPath(cluster.selfAddress)+s"/user/Manager")
-      ref ! Delete_User(User_name)
-
-    case MemberRemoved(member, previousStatus) =>
-//      val ref = context.actorSelection(RootActorPath(member.address)+s"/user/Manager")
-//      ref ! Delete_User(User_name)
 
     case Join(seed, name, ip) =>
       connect = address + seed
@@ -75,30 +61,32 @@ class Listener(name: String) extends Actor with ActorLogging {
       VPGcontrol.userController = UserController
       val subscriber = context.actorOf(Props[Subscriber])
       subscriber ! getController(VPGcontrol, UserController)
-      val publicActor = context.actorOf(Props[Publisher], User_name)
-      val destination = context.actorOf(Props[Destination],User_name.toUpperCase)
+      val publicActor = context.actorOf(Props(classOf[Publisher],name))
+      val destination = context.actorOf(Props[Destination],User_name)
       destination_Actor = destination
+      destination ! get_Ucontrol(UserController)
       UserController.private_actor = destination
-      val privateActor = context.actorOf(Props[Sender],User_name.toLowerCase)
-      println(privateActor.path)
+      val privateActor = context.actorOf(Props(classOf[Sender],name))
       private_Actor = privateActor
       VPGcontrol.publicActor = publicActor
 
     case get_controller_Tab(viewPagerController)=>
-      destination_Actor ! get_Controllers(viewPagerController)
       viewPagerController.check_Status = true
       viewPagerController.privateActor = private_Actor
+      viewPagerController.name = User_name
 
 
     case AddUser(name: String) =>
       if (VPGcontrol == null || User_name == name) {
-        Thread.sleep(2000)
+
       } else {
         UserController.addUser(name)
       }
 
-    case Delete_User(name)=>
-      UserController.deleteUser(name)
+    case Deleteuser(name:String)=>
+      UserController.deleteTAb(name)
+
+
   }
 }
 
@@ -112,8 +100,8 @@ object Listener {
 
   case class AddUser(name: String)
 
-  case class get_controller_Tab(viewPagerController: ViewPagerController)
+  case class Deleteuser(name:String)
 
-  case class Delete_User(name:String)
+  case class get_controller_Tab(viewPagerController: ViewPagerController)
 
 }

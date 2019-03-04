@@ -37,6 +37,7 @@ class LoginController {
       alert.setContentText("Заполните пустые поля")
       alert.showAndWait()
     } else {
+      ConfigFactory
       val system = ActorSystem("chat")
       val listener = system.actorOf(Props(classOf[Listener], name),"Manager")
       listener ! Join(seed,name,ip)

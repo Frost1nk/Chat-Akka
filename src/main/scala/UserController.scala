@@ -1,14 +1,13 @@
 import java.time.LocalDate
 
-import Destination.get_Controllers
+import Destination.{get_Controllers, vpg_control}
 import Listener.get_controller_Tab
 import akka.actor.ActorRef
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.{FXCollections,  ObservableList}
 import javafx.fxml.{FXML, FXMLLoader}
-import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.{Alert, ListView, Tab, TabPane}
+import javafx.scene.control.{ListView, Tab, TabPane}
 import javafx.scene.layout.VBox
 
 import scala.collection.JavaConverters._
@@ -58,30 +57,38 @@ class UserController {
     })
   }
 
+  def deleteTAb(name: String) = {
+    Platform.runLater(() => {
+      tabPane.getTabs.removeIf(_.getText == name)
+      listUsers.getItems.removeIf(_ == name)
+    })
+
+  }
+
+  def `(_/(-_-)\_)рисуйСообщеньку`(name: String, сообщенька: String) = {
+    val messageListView = tabPane.getTabs.get(1).getContent.asInstanceOf[ListView[String]]
+    messageListView.getItems.add(s"$name: $сообщенька")
+  }
 
   def addTabs(name: String): Unit = {
-    var resource = UserUI.getClass.getResource("viewPager.fxml")
-    var loader = new FXMLLoader(resource)
-    var root: VBox = loader.load()
-    var tab: Tab = new Tab()
-    var controller: ViewPagerController = loader.getController[ViewPagerController]
-    actor ! get_controller_Tab(controller)
-    controller.path = name.toUpperCase
-    tab.setText(name)
-    tab.setClosable(true)
-    tab.setContent(root)
-    tabPane.getTabs.add(tab)
-  }
-
-  def deleteUser(name: String): Unit = {
     Platform.runLater(() => {
-      list.forEach(e => if (e.compareTo(name) == name) {
-        println(e)
-      })
+      var resource = UserUI.getClass.getResource("viewPager.fxml")
+      var loader = new FXMLLoader(resource)
+      var root: VBox = loader.load()
+      var tab: Tab = new Tab()
+      var controller: ViewPagerController = loader.getController[ViewPagerController]
+      actor ! get_controller_Tab(controller)
+      private_actor ! vpg_control(controller)
+      controller.path = name
+      tab.setText(name)
+      tab.setClosable(true)
+      tab.setContent(new ListView())
+//      tab.setContent(root)
 
+      tabPane.getTabs.add(tab)
     })
-    println("ТИПА УДАЛИЛ")
   }
+
 
   def addUser(name: String): Unit = {
     Platform.runLater(() => {
