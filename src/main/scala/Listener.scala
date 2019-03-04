@@ -13,7 +13,7 @@ class Listener(name: String) extends Actor with ActorLogging {
   private val cluster = Cluster(context.system)
 
   //ссылка на созданый актор менеджер,приват
-  var listener,private_Actor,destination_Actor: ActorRef = _
+  var listener, private_Actor, destination_Actor: ActorRef = _
 
   var LoginController: LoginController = _
 
@@ -40,8 +40,12 @@ class Listener(name: String) extends Actor with ActorLogging {
 
     case MemberUp(member) =>
       val ref = context.actorSelection(RootActorPath(member.address) + s"/user/Manager")
-      log.info(s"Reference: $ref")
       ref ! AddUser(name)
+
+
+    case UnreachableMember(member)=>
+      val ref = context.actorSelection(RootActorPath(cluster.selfAddress)+s"/user/Manager")
+      ref ! Deleteuser(name)
 
     case Join(seed, name, ip) =>
       connect = address + seed
@@ -61,16 +65,16 @@ class Listener(name: String) extends Actor with ActorLogging {
       VPGcontrol.userController = UserController
       val subscriber = context.actorOf(Props[Subscriber])
       subscriber ! getController(VPGcontrol, UserController)
-      val publicActor = context.actorOf(Props(classOf[Publisher],name))
-      val destination = context.actorOf(Props[Destination],User_name)
+      val publicActor = context.actorOf(Props(classOf[Publisher], name))
+      val destination = context.actorOf(Props[Destination], User_name)
       destination_Actor = destination
       destination ! get_Ucontrol(UserController)
       UserController.private_actor = destination
-      val privateActor = context.actorOf(Props(classOf[Sender],name))
+      val privateActor = context.actorOf(Props(classOf[Sender], name))
       private_Actor = privateActor
       VPGcontrol.publicActor = publicActor
 
-    case get_controller_Tab(viewPagerController)=>
+    case get_controller_Tab(viewPagerController) =>
       viewPagerController.check_Status = true
       viewPagerController.privateActor = private_Actor
       viewPagerController.name = User_name
@@ -83,7 +87,7 @@ class Listener(name: String) extends Actor with ActorLogging {
         UserController.addUser(name)
       }
 
-    case Deleteuser(name:String)=>
+    case Deleteuser(name: String) =>
       UserController.deleteTAb(name)
 
 
@@ -100,7 +104,7 @@ object Listener {
 
   case class AddUser(name: String)
 
-  case class Deleteuser(name:String)
+  case class Deleteuser(name: String)
 
   case class get_controller_Tab(viewPagerController: ViewPagerController)
 

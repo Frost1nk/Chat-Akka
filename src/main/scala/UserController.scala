@@ -5,7 +5,7 @@ import Listener.get_controller_Tab
 import akka.actor.ActorRef
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
-import javafx.collections.{FXCollections,  ObservableList}
+import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.control.{ListView, Tab, TabPane}
 import javafx.scene.layout.VBox
@@ -59,16 +59,13 @@ class UserController {
 
   def deleteTAb(name: String) = {
     Platform.runLater(() => {
-      tabPane.getTabs.removeIf(_.getText == name)
-      listUsers.getItems.removeIf(_ == name)
+      println(name)
+      println(tabPane.getTabs.removeIf(_.getText == name))
+      println(listUsers.getItems.removeIf(_ == name))
     })
 
   }
 
-  def `(_/(-_-)\_)рисуйСообщеньку`(name: String, сообщенька: String) = {
-    val messageListView = tabPane.getTabs.get(1).getContent.asInstanceOf[ListView[String]]
-    messageListView.getItems.add(s"$name: $сообщенька")
-  }
 
   def addTabs(name: String): Unit = {
     Platform.runLater(() => {
@@ -82,9 +79,7 @@ class UserController {
       controller.path = name
       tab.setText(name)
       tab.setClosable(true)
-      tab.setContent(new ListView())
-//      tab.setContent(root)
-
+      tab.setContent(root)
       tabPane.getTabs.add(tab)
     })
   }

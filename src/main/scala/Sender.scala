@@ -1,4 +1,3 @@
-import Publisher.Message
 import Sender.{Message_To, Private_Message}
 import akka.actor.{Actor, ActorLogging}
 import akka.cluster.pubsub.DistributedPubSub

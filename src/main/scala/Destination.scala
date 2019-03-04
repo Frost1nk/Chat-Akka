@@ -18,11 +18,10 @@ class Destination extends Actor with ActorLogging {
 
 
   def receive = {
-    case Message_To(name,text)=>
+    case Message_To(name, text) =>
       User_controller.tabPane.getTabs.asScala.find(_.getText == name)
         .fold(User_controller.addTabs(name))(User_controller.tabPane.getSelectionModel.select)
-      if(control == null){}else{control.post(name,text)}
-
+      control.post(name, text)
 
 
     case get_Controllers(controller) =>
@@ -31,7 +30,7 @@ class Destination extends Actor with ActorLogging {
     case get_Ucontrol(userController) =>
       User_controller = userController
 
-    case vpg_control(viewPagerController)=>
+    case vpg_control(viewPagerController) =>
       control = viewPagerController
   }
 }
