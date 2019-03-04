@@ -6,14 +6,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewPagerController">
-    <children>
-        <ListView fx:id="listMessages" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
-        <HBox prefHeight="53.0" prefWidth="600.0">
-            <children>
-                <TextArea fx:id="textArea" prefHeight="23.0" prefWidth="535.0" HBox.hgrow="SOMETIMES" />
-                <Button fx:id="btnSend" mnemonicParsing="false" prefHeight="61.0" prefWidth="65.0" text="Send" />
-            </children>
-        </HBox>
-    </children>
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ViewPagerController">
+    <ListView fx:id="listMessages" VBox.vgrow="ALWAYS"/>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="53.0">
+        <TextArea fx:id="textArea" maxWidth="1.7976931348623157E308" prefHeight="23.0" HBox.hgrow="SOMETIMES"/>
+        <Button fx:id="btnSend" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                minWidth="-Infinity" mnemonicParsing="false" prefHeight="61.0" prefWidth="65.0" text="Send"/>
+    </HBox>
 </VBox>

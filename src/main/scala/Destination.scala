@@ -1,46 +1,51 @@
-import Destination.{get_Controllers, get_Ucontrol, vpg_control}
+import Destination.{GetControllers, GetUcontrol, Vpgcontrol}
 import Sender.Message_To
-import akka.actor.{Actor, ActorLogging}
+import akka.actor.{Actor, ActorLogging, ActorRef}
 import akka.cluster.pubsub.DistributedPubSub
+import javafx.application.Platform
+
 import scala.collection.JavaConverters._
 
 class Destination extends Actor with ActorLogging {
 
   import akka.cluster.pubsub.DistributedPubSubMediator.Put
 
-  val mediator = DistributedPubSub(context.system).mediator
+  val mediator: ActorRef = DistributedPubSub(context.system).mediator
 
   mediator ! Put(self)
 
 
   var User_controller: UserController = _
+
   var control: ViewPagerController = _
 
 
-  def receive = {
+  def receive: PartialFunction[Any, Unit] = {
     case Message_To(name, text) =>
       User_controller.tabPane.getTabs.asScala.find(_.getText == name)
-        .fold(User_controller.addTabs(name))(User_controller.tabPane.getSelectionModel.select)
-      control.post(name, text)
+        .fold(User_controller.AddTabs(name))(User_controller.tabPane.getSelectionModel.select)
+      Platform.runLater(() => {
+        control.Post(name, text)
+      })
 
 
-    case get_Controllers(controller) =>
+    case GetControllers(controller) =>
       control = controller
 
-    case get_Ucontrol(userController) =>
+    case GetUcontrol(userController) =>
       User_controller = userController
 
-    case vpg_control(viewPagerController) =>
+    case Vpgcontrol(viewPagerController) =>
       control = viewPagerController
   }
 }
 
 object Destination {
 
-  case class get_Controllers(viewPagerController: ViewPagerController)
+  case class GetControllers(viewPagerController: ViewPagerController)
 
-  case class get_Ucontrol(userController: UserController)
+  case class GetUcontrol(userController: UserController)
 
-  case class vpg_control(viewPagerController: ViewPagerController)
+  case class Vpgcontrol(viewPagerController: ViewPagerController)
 
 }

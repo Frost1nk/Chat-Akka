@@ -20,9 +20,9 @@ object UserUI {
       primaryStage.setTitle("Login")
       primaryStage.setScene(new Scene(root, 411, 301))
       primaryStage.show()
-      primaryStage.setOnCloseRequest(event => {
+      primaryStage.setOnCloseRequest{_ =>
         primaryStage.close()
-      })
+      }
     }
 
 

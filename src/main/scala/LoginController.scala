@@ -1,7 +1,6 @@
-import Listener.{Join, getUController, login}
-import akka.actor.{ActorRef, ActorSystem, Props, RootActorPath}
-import com.typesafe.config.{Config, ConfigFactory}
-import io.aeron.Aeron.Configuration
+import Listener.{CloseCallback, Join, GetControllerUC, Login}
+import akka.actor.{ActorRef, ActorSystem, Props}
+import com.typesafe.config.ConfigFactory
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene.{Parent, Scene}
 import javafx.scene.control.Alert.AlertType
@@ -27,7 +26,7 @@ class LoginController {
   }
 
 
-  def onClickLogin(mouseEvent: MouseEvent) = {
+  def onClickLogin(mouseEvent: MouseEvent): Unit = {
     val name: String = fieldName.getText()
     val seed: String = fieldSeedIP.getText()
     val ip: String = fieldIP.getText()
@@ -60,23 +59,24 @@ class LoginController {
            }""")
       val system = ActorSystem("chat", ConfigFactory.load(customConf))
       val listener = system.actorOf(Props(classOf[Listener], name), "Manager")
-      listener ! Join(seed, name, ip)
-      listener ! login(controller, listener)
-      LoginController.chat(stage, listener,name,ip,system)
+      listener ! Join(seed, name)
+      listener ! Login(controller, listener)
+      LoginController.Chat(stage, listener, name, ip, system)
     }
   }
 }
 
 object LoginController {
-  def chat(stage: Stage, actor: ActorRef,name:String,ip:String,system: ActorSystem) = {
+  def Chat(stage: Stage, actor: ActorRef, name: String, ip: String, system: ActorSystem): Unit = {
     val resource = getClass.getResource("main.fxml")
     val loader = new FXMLLoader(resource)
     val root = loader.load[Parent]
     val controller: UserController = loader.getController[UserController]
-    actor ! getUController(controller)
+    actor ! GetControllerUC(controller)
     stage.setTitle(s"Chat -  $name : ($ip)")
-    stage.setScene(new Scene(root, 773, 283))
-    stage.setOnCloseRequest(event => {
+    stage.setScene(new Scene(root, 600, 400))
+    stage.setOnCloseRequest(_ => {
+      actor ! CloseCallback
       stage.close()
       system.terminate()
     })

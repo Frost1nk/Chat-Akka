@@ -1,7 +1,4 @@
-import java.time.LocalDate
-
-import Destination.{get_Controllers, vpg_control}
-import Listener.get_controller_Tab
+import Listener.GetcontrollerTab
 import akka.actor.ActorRef
 import javafx.application.Platform
 import javafx.beans.value.ObservableValue
@@ -22,7 +19,7 @@ class UserController {
 
   var control: ViewPagerController = _
 
-  var tab_control: ViewPagerController = _
+  var tabControl: ViewPagerController = _
 
   @FXML
   var listUsers: ListView[String] = _
@@ -30,19 +27,19 @@ class UserController {
 
   @FXML
   def initialize(): Unit = {
-    var resource = UserUI.getClass.getResource("viewPager.fxml")
-    var loader = new FXMLLoader(resource)
-    var root: VBox = loader.load()
-    var tab: Tab = new Tab()
+    val resource = UserUI.getClass.getResource("viewPager.fxml")
+    val loader = new FXMLLoader(resource)
+    val root: VBox = loader.load()
+    val tab: Tab = new Tab()
     tab.setText("Общий")
     tab.setClosable(false)
     tab.setContent(root)
-    var controller: ViewPagerController = loader.getController[ViewPagerController]
+    val controller: ViewPagerController = loader.getController[ViewPagerController]
     control = controller
     tabPane.getTabs.add(tab)
     listUsers.setItems(list)
     val change: javafx.beans.value.ChangeListener[String] = (observable: ObservableValue[_ <: String], oldValue: String, newValue: String) => {
-      addTabs(newValue)
+      AddTabs(newValue)
     }
 
     listUsers.setOnMouseClicked(event => {
@@ -51,31 +48,31 @@ class UserController {
         event.consume()
       } else {
         tabPane.getTabs.asScala.find(_.getText == selectedItem)
-          .fold(addTabs(selectedItem))(tabPane.getSelectionModel.select)
+          .fold(AddTabs(selectedItem))(tabPane.getSelectionModel.select)
       }
 
     })
   }
 
-  def deleteTAb(name: String) = {
+  def DeleteTAb(name: String): Unit = {
     Platform.runLater(() => {
-      println(name)
-      println(tabPane.getTabs.removeIf(_.getText == name))
-      println(listUsers.getItems.removeIf(_ == name))
-    })
+      list.forEach(i => print(i + ", "))
+      listUsers.getItems.forEach(i => print(i + ", "))
 
+      tabPane.getTabs.removeIf(_.getText == name)
+      list.removeIf(_ == name)
+    })
   }
 
 
-  def addTabs(name: String): Unit = {
+  def AddTabs(name: String): Unit = {
     Platform.runLater(() => {
       var resource = UserUI.getClass.getResource("viewPager.fxml")
       var loader = new FXMLLoader(resource)
       var root: VBox = loader.load()
       var tab: Tab = new Tab()
       var controller: ViewPagerController = loader.getController[ViewPagerController]
-      actor ! get_controller_Tab(controller)
-      private_actor ! vpg_control(controller)
+      actor ! GetcontrollerTab(controller)
       controller.path = name
       tab.setText(name)
       tab.setClosable(true)
