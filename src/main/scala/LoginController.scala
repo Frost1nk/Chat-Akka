@@ -43,6 +43,7 @@ class LoginController {
         s"""akka {
                actor {
                  provider = "akka.cluster.ClusterActorRefProvider"
+                 warn-about-java-serializer-usage = false
                }
              remote {
                log-remote-lifecycle-events = off
